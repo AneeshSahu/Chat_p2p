@@ -2,15 +2,16 @@ import socket
 import threading
 
 class Mouth(threading.Thread):
-    def __init__(self,myname):
+    def __init__(self,myname,myport):
         threading.Thread.__init__(self)
         self.myname = myname
         self.othername = None
+        self.myport = myport
     def run(self):
         s = socket.socket()
         print("created")
 
-        s.bind(('localhost',9999))
+        s.bind(('localhost',myport))
         s.listen(1)
         print("waiting")
         
@@ -26,15 +27,16 @@ class Mouth(threading.Thread):
             c.send(bytes(msg,'utf-8'))
     
 class Ear(threading.Thread):
-    def __init__(self,myname):
+    def __init__(self,myname,otherport):
         threading.Thread.__init__(self)
         self.myname = myname
         self.othername = None
+        self.otherport= otherport
     def run(self):
         c = socket.socket()
         while True:
             try:
-                c.connect(('localhost',9998))
+                c.connect(('localhost',otherport))
                 print("Established connection")
                 break
             except:
@@ -48,11 +50,13 @@ class Ear(threading.Thread):
             
             
 nameme = input("Username?")
+myport = int(input("Which port should I host on?"))
+otherport = int(input("Which port should I listen on?"))
 
-s = Mouth(nameme)
+s = Mouth(nameme,myport)
 
 s.start()
 
-c = Ear(nameme)
+c = Ear(nameme,otherport)
 
 c.start()

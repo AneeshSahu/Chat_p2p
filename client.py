@@ -10,7 +10,7 @@ class Mouth(threading.Thread):
         s = socket.socket()
         print("created")
 
-        s.bind(('localhost',9999))
+        s.bind(('localhost',9998))
         s.listen(1)
         print("waiting")
         
@@ -34,7 +34,7 @@ class Ear(threading.Thread):
         c = socket.socket()
         while True:
             try:
-                c.connect(('localhost',9998))
+                c.connect(('localhost',9999))
                 print("Established connection")
                 break
             except:

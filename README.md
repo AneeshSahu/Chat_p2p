@@ -3,4 +3,4 @@
 Peer to peer chatbox
 Utilising Socket and Threading to allow peer to peer chatting. 
 Unfortunately collision between threads is still an issue.
-Needs more work
+Needs more work. Need to study Threads more
